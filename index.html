@@ -1,0 +1,960 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دعوة تخرج - Waleed Alsherif</title>
+
+  <!-- أيقونة قبعة التخرج -->
+  <link rel="icon" href="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f393.png" type="image/png">
+
+  <!-- الخطوط -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@600;700;800&family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&family=Aref+Ruqaa:wght@700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #F8F5F0;
+      color: #333;
+      font-family: 'Cairo', sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* الصفحة الأولى: الظرف */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .title-area h1 {
+      font-family: 'Alex Brush', cursive;
+      font-size: clamp(2.5rem, 8vw, 3.8rem);
+      color: #1A2530;
+      font-weight: normal;
+    }
+
+    .title-area p {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(.85rem, 3vw, 1.05rem);
+      color: #A38A53;
+      letter-spacing: 5px;
+    }
+
+    .envelope-box {
+      position: relative;
+      width: min(85vw, 380px);
+      height: clamp(190px, 56vw, 250px);
+      background: #16222F;
+      border-radius: 10px;
+      box-shadow: 0 15px 35px rgba(0,0,0,.25);
+      cursor: pointer;
+      margin: 0 auto;
+      perspective: 800px;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: min(42.5vw, 190px) solid transparent;
+      border-right: min(42.5vw, 190px) solid transparent;
+      border-top: calc(clamp(190px, 56vw, 250px) * .52) solid #1E2D3D;
+      transform-origin: top center;
+      transition: transform .8s cubic-bezier(.4, 0, .2, 1);
+      z-index: 12;
+    }
+
+    .envelope-box.open .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .envelope-base {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: min(42.5vw, 190px) solid #111B24;
+      border-bottom: calc(clamp(190px, 56vw, 250px) * .52) solid #16222F;
+      border-right: min(42.5vw, 190px) solid #111B24;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      z-index: 10;
+    }
+
+    .wax-seal {
+      position: absolute;
+      top: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(55px, 15vw, 68px);
+      height: clamp(55px, 15vw, 68px);
+      background: radial-gradient(circle, #E6C567 0%, #C5A059 60%, #8C6D32 100%);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 5px 12px rgba(0,0,0,.35);
+      border: 2px solid #FDF0CD;
+      z-index: 20;
+      transition: opacity .4s ease;
+    }
+
+    .wax-seal span.letter {
+      font-family: 'Alex Brush', cursive;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .wax-seal span.text {
+      font-size: 9px;
+      font-weight: bold;
+    }
+
+    .envelope-box.open .wax-seal {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .card-popup {
+      position: absolute;
+      bottom: 10px;
+      left: 5%;
+      width: 90%;
+      height: 90%;
+      background: #F8F5F0;
+      border-radius: 8px;
+      border: 1px solid #D1C7BD;
+      box-shadow: 0 10px 25px rgba(0,0,0,.15);
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px;
+      transform: scale(.95);
+      transition: transform 1s cubic-bezier(.22, 1, .36, 1), opacity .8s ease;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .envelope-box.open .card-popup {
+      opacity: 1;
+      transform: translateY(-90px) scale(1.05);
+      z-index: 15;
+    }
+
+    .card-popup-photo {
+      width: 45%;
+      height: 85%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.2));
+    }
+
+    .card-popup-text {
+      font-family: 'Alex Brush', cursive;
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      color: #1A2530;
+      font-weight: bold;
+    }
+
+    .footer-text {
+      font-family: 'Cinzel', serif;
+      font-size: .75rem;
+      color: #777;
+      letter-spacing: 2px;
+    }
+
+    /* الصفحة الثانية: صورة المهندس والأبيات */
+    .profile-page {
+      min-height: 100vh;
+      background: #F8F5F0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 15px 20px;
+      text-align: center;
+    }
+
+    .static-curved-svg {
+      width: min(85vw, 380px);
+      height: 60px;
+      margin-bottom: -18px;
+      overflow: visible;
+    }
+
+    .static-curved-svg text {
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+      fill: #1A2530;
+      letter-spacing: 3px;
+      font-weight: 700;
+    }
+
+    .full-image-wrapper {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .full-image-wrapper img {
+      width: 100%;
+      height: auto;
+      max-height: 62vh;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,.12));
+    }
+
+    .poetry-section {
+      direction: rtl;
+      margin-top: 10px;
+    }
+
+    .poetry-section p {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.5rem, 5.5vw, 2rem);
+      color: #292722;
+      font-weight: 700;
+      line-height: 2;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    /* الصفحة الثالثة: التخرج والدعوة */
+    .closing-section {
+      min-height: 100vh;
+      background: #F8F5F0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 35px 15px 0;
+      text-align: center;
+    }
+
+    .quran-verse-header {
+      margin: 5px 0 20px;
+      width: 100%;
+      max-width: 650px;
+    }
+
+    .quran-text {
+      font-family: 'Amiri', 'Aref Ruqaa', serif;
+      font-size: clamp(1.6rem, 6vw, 2.5rem);
+      color: #292722;
+      font-weight: 700;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .design-text-block {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .design-text-block .line {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(1.1rem, 4.2vw, 1.35rem);
+      color: #454545;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    .spacer-block {
+      height: 12px;
+    }
+
+    /* زخرفة عبارة تم تخرجي */
+    .graduation-decoration {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      margin: 14px auto;
+    }
+
+    .graduation-phrase {
+      font-family: 'Aref Ruqaa', 'Amiri', serif;
+      font-size: clamp(1.8rem, 7vw, 2.5rem);
+      font-weight: 700;
+      color: #1A2530;
+      white-space: nowrap;
+    }
+
+    .decoration-line {
+      width: 42px;
+      height: 1px;
+      background: #A38A53;
+      position: relative;
+    }
+
+    .decoration-line::after {
+      content: "✦";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #A38A53;
+      background: #F8F5F0;
+      padding: 0 3px;
+      font-size: 12px;
+    }
+
+    /* شعار الجامعة */
+    .logo-container {
+      margin: 16px 0 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-container img {
+      width: clamp(130px, 32vw, 190px);
+      height: auto;
+      max-height: 210px;
+      object-fit: contain;
+    }
+
+    .degree-info {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+      color: #454545;
+      font-weight: 400;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .conclusion-line {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(1.1rem, 4.8vw, 1.45rem);
+      color: #454545;
+      font-weight: 400;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    /* الدعوة بجانب صورة المهندس */
+    .side-by-side-container {
+      width: 100%;
+      max-width: 750px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin: auto auto 0;
+      padding: 15px 0;
+    }
+
+    .side-info-text {
+      flex: 1;
+      min-width: 0;
+      text-align: center;
+      padding: 0;
+      z-index: 15;
+    }
+
+    .invitation-intro {
+      font-family: 'Tajawal', sans-serif;
+      color: #A38A53;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .invitation-heading {
+      font-family: 'Aref Ruqaa', serif;
+      font-size: clamp(1.3rem, 4.5vw, 2rem);
+      color: #1A2530;
+      margin-bottom: 5px;
+    }
+
+    .invitation-description {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.1rem;
+      color: #454545;
+      margin-bottom: 5px;
+    }
+
+    .engineer-name {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.1rem, 4.2vw, 1.8rem);
+      color: #1A2530;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      white-space: nowrap;
+    }
+
+    .location-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(.7rem, 2.5vw, 1rem);
+      color: #4A5568;
+      white-space: nowrap;
+    }
+
+    .side-person-image {
+      display: block;
+      width: 48%;
+      max-width: 300px;
+      height: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+      align-self: flex-end;
+      z-index: 10;
+      filter: drop-shadow(-8px 10px 18px rgba(0,0,0,.18));
+    }
+
+    /* الصفحة الرابعة: العداد */
+    .countdown-section {
+      min-height: 100vh;
+      background: #F8F5F0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 15px;
+      text-align: center;
+    }
+
+    .countdown-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.5rem, 6vw, 2.3rem);
+      color: #1A2530;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    .countdown-timer-box {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: clamp(8px, 3vw, 25px);
+      margin-bottom: 20px;
+      direction: ltr;
+    }
+
+    .time-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .time-unit .number {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 7vw, 3.5rem);
+      color: #1A2530;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .time-unit .label {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(.65rem, 2vw, .9rem);
+      color: #666;
+      margin-top: 8px;
+    }
+
+    /* تفاصيل الحفل الفنية */
+    .event-art-details {
+      width: 100%;
+      max-width: 420px;
+      margin: 10px auto 0;
+      padding: 20px 12px;
+      position: relative;
+      color: #1A2530;
+    }
+
+    .event-art-title {
+      font-family: 'Aref Ruqaa', 'Amiri', serif;
+      font-size: clamp(1.4rem, 5vw, 1.9rem);
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+
+    .event-art-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .event-art-item {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .event-art-item .event-label {
+      display: block;
+      font-size: .85rem;
+      color: #8C795F;
+      margin-bottom: 5px;
+    }
+
+    .event-art-item .event-value {
+      display: block;
+      font-family: 'Amiri', 'Cairo', serif;
+      font-size: clamp(1rem, 3.7vw, 1.25rem);
+      color: #1A2530;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .event-art-item .event-icon {
+      display: block;
+      font-size: 1.4rem;
+      color: #A38A53;
+      margin-bottom: 6px;
+    }
+
+    .event-art-divider {
+      width: 75%;
+      height: 1px;
+      background: #D9CDBB;
+      margin: 20px auto;
+    }
+
+    .event-art-line {
+      position: relative;
+      height: 90px;
+      width: 2px;
+      margin: 5px auto;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        #A38A53 15%,
+        #A38A53 85%,
+        transparent
+      );
+      transform: rotate(-32deg);
+    }
+
+    .event-art-heart {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #F8F5F0;
+      color: #755443;
+      font-size: 19px;
+      line-height: 1;
+      padding: 5px;
+    }
+
+    .event-art-heart.top {
+      top: 18%;
+    }
+
+    .event-art-heart.bottom {
+      bottom: 18%;
+    }
+
+    .event-art-note {
+      font-family: 'Amiri', serif;
+      color: #8C795F;
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
+      font-weight: 700;
+      margin-top: 24px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    /* خريطة موقع الحفل */
+    .event-map {
+      width: 100%;
+      max-width: 380px;
+      margin: 25px auto 0;
+      text-align: center;
+    }
+
+    .event-map-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.3rem;
+      color: #1A2530;
+      margin-bottom: 12px;
+    }
+
+    .event-map-frame {
+      width: 100%;
+      height: 230px;
+      border: 1px solid #D9CDBB;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+    .event-map-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .event-map-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 9px 20px;
+      background: #1A2530;
+      color: #F8F5F0;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: .9rem;
+      transition: background .3s ease;
+    }
+
+    .event-map-link:hover {
+      background: #A38A53;
+    }
+
+    /* تنسيق الهاتف */
+    @media (max-width: 400px) {
+      .side-by-side-container {
+        gap: 4px;
+      }
+
+      .side-person-image {
+        width: 44%;
+        min-width: 135px;
+      }
+
+      .side-info-text {
+        overflow: visible;
+      }
+
+      .engineer-name {
+        font-size: clamp(.9rem, 4vw, 1.1rem);
+        white-space: normal;
+      }
+
+      .location-row {
+        white-space: normal;
+        font-size: .7rem;
+      }
+
+      .invitation-heading {
+        font-size: 1.25rem;
+      }
+
+      .event-art-row {
+        gap: 8px;
+      }
+
+      .event-art-item .event-value {
+        font-size: .95rem;
+      }
+
+      .graduation-phrase {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- الصفحة الأولى: الظرف -->
+  <section id="hero" class="hero-section">
+    <div class="title-area">
+      <h1>Waleed Alsherif</h1>
+      <p>GRADUATION</p>
+    </div>
+
+    <div id="envelope" class="envelope-box" onclick="openEnvelopeOnly()">
+      <div class="envelope-flap"></div>
+      <div class="envelope-base"></div>
+
+      <div class="card-popup">
+        <div class="card-popup-text">Save The Date</div>
+        <img
+          class="card-popup-photo"
+          src="Framed_Engineer_in_Safety_Vest-removebg-preview.png"
+          alt="صورة الخريج">
+      </div>
+
+      <div class="wax-seal">
+        <span class="letter">W</span>
+        <span class="text">اضغط هنا</span>
+      </div>
+    </div>
+
+    <div class="footer-text">
+      THIS INVITATION IS EXCLUSIVE FOR YOU
+    </div>
+  </section>
+
+  <!-- الصفحة الثانية: صورة الخريج والأبيات -->
+  <section id="profile-page" class="profile-page">
+
+    <svg class="static-curved-svg" viewBox="0 0 320 50">
+      <path id="fixedArcPath" d="M 10,45 Q 160,8 310,45" fill="transparent"/>
+      <text text-anchor="middle">
+        <textPath href="#fixedArcPath" startOffset="50%">
+          ENGINEER WALEED ALSHERIF
+        </textPath>
+      </text>
+    </svg>
+
+    <div class="full-image-wrapper">
+      <img
+        src="Framed_Engineer_in_Safety_Vest-removebg-preview.png"
+        alt="Engineer Waleed Alsherif">
+    </div>
+
+    <div class="poetry-section">
+      <p>ولَنَا فِي مَراتِبِ العُلَا مَرتَبَةٌ</p>
+      <p>تَأتِي إِلَينَا وَإِن طَالَ بِنَا الدَّهرُ</p>
+    </div>
+  </section>
+
+  <!-- الصفحة الثالثة: التخرج والدعوة -->
+  <section id="closing" class="closing-section">
+
+    <div class="quran-verse-header">
+      <p class="quran-text">
+        وَآخِرُ دَعْوَاهُمْ أَنِ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ
+      </p>
+    </div>
+
+    <div class="design-text-block">
+      <div class="line">ما سلكنا البدايات إلا بتيسيره</div>
+      <div class="line">وما بلغنا الغايات إلا بتوفيقه</div>
+      <div class="spacer-block"></div>
+      <div class="line">وما حققنا الغايات إلا بفضله</div>
+
+      <div class="graduation-decoration">
+        <span class="decoration-line"></span>
+        <span class="graduation-phrase">تم تخرّجي</span>
+        <span class="decoration-line"></span>
+      </div>
+
+      <div class="line">بفضل الله وتوفيقه</div>
+    </div>
+
+    <div class="logo-container">
+      <img
+        src="photo_2026-10-17_18-21-20-removebg-preview.png"
+        alt="كلية الهندسة - جامعة طرابلس">
+    </div>
+
+    <div class="degree-info">
+      - بدرجة البكالوريوس -<br>
+      في تخصص الهندسة المدنية
+    </div>
+
+    <div class="conclusion-line">
+      الحمد لله على التمام وحسن الختام
+    </div>
+
+    <!-- نص الدعوة بجانب صورة المهندس -->
+    <div class="side-by-side-container">
+
+      <div class="side-info-text">
+        <p class="invitation-intro">بكل فخر واعتزاز</p>
+        <h2 class="invitation-heading">ندعوكم لحضور</h2>
+        <p class="invitation-description">حفل تخرّج</p>
+
+        <div class="engineer-name">
+          المهندس وليد صلاح الشريف
+        </div>
+
+        <div class="location-row">
+          <span>📍</span>
+          <span>جامعة طرابلس - كلية الهندسة</span>
+        </div>
+      </div>
+
+      <img
+        class="side-person-image"
+        src="Safety_Professional_with_Helmet_and_Smartphone-removebg-preview.png"
+        alt="المهندس وليد صلاح الشريف">
+
+    </div>
+  </section>
+
+  <!-- الصفحة الرابعة: العداد وتفاصيل الحفل -->
+  <section class="countdown-section">
+
+    <div class="countdown-title">The countdown is on</div>
+
+    <div class="countdown-timer-box">
+      <div class="time-unit">
+        <span class="number" id="days">00</span>
+        <span class="label">Days</span>
+      </div>
+
+      <span class="number" style="opacity: .4;">:</span>
+
+      <div class="time-unit">
+        <span class="number" id="hours">00</span>
+        <span class="label">Hours</span>
+      </div>
+
+      <span class="number" style="opacity: .4;">:</span>
+
+      <div class="time-unit">
+        <span class="number" id="minutes">00</span>
+        <span class="label">Minutes</span>
+      </div>
+
+      <span class="number" style="opacity: .4;">:</span>
+
+      <div class="time-unit">
+        <span class="number" id="seconds">00</span>
+        <span class="label">Seconds</span>
+      </div>
+    </div>
+
+    <!-- تفاصيل الحفل -->
+    <div class="event-art-details">
+
+      <div class="event-art-title">التفاصيل</div>
+
+      <div class="event-art-row">
+        <div class="event-art-item">
+          <span class="event-icon">♧</span>
+          <span class="event-label">التاريخ</span>
+          <span class="event-value">27 / 10 / 2026</span>
+        </div>
+
+        <div class="event-art-item">
+          <span class="event-icon">♡</span>
+          <span class="event-label">الوقت</span>
+          <span class="event-value">10:00 صباحًا</span>
+        </div>
+      </div>
+
+      <div class="event-art-divider"></div>
+
+      <div class="event-art-line">
+        <span class="event-art-heart top">♥</span>
+        <span class="event-art-heart bottom">♥</span>
+      </div>
+
+      <div class="event-art-row">
+        <div class="event-art-item">
+          <span class="event-icon">⌖</span>
+          <span class="event-label">المكان</span>
+          <span class="event-value">كلية الهندسة المدنية</span>
+        </div>
+      </div>
+
+      <!-- خريطة موقع الحفل -->
+      <div class="event-map">
+        <div class="event-map-title">موقع الاحتفال على الخريطة</div>
+
+        <div class="event-map-frame">
+          <iframe
+            src="https://maps.google.com/maps?q=Faculty%20of%20Engineering%20University%20of%20Tripoli%20Libya&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            title="خريطة موقع الحفل">
+          </iframe>
+        </div>
+
+        <a
+          class="event-map-link"
+          href="https://www.google.com/maps/search/?api=1&query=Faculty+of+Engineering+University+of+Tripoli+Libya"
+          target="_blank"
+          rel="noopener noreferrer">
+          📍 افتح الموقع في Google Maps
+        </a>
+      </div>
+
+      <div class="event-art-note">
+        حضوركم يكتمل به فرحنا
+      </div>
+
+    </div>
+  </section>
+
+  <!-- JavaScript: فتح الظرف والعداد -->
+  <script>
+    function openEnvelopeOnly() {
+      const envelope = document.getElementById('envelope');
+      envelope.classList.add('open');
+    }
+
+    // موعد الحفل: 27 أكتوبر 2026 الساعة 10 صباحًا
+    const targetDate = new Date('October 27, 2026 10:00:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        const days = Math.floor(
+          difference / (1000 * 60 * 60 * 24)
+        );
+
+        const hours = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) /
+          (1000 * 60 * 60)
+        );
+
+        const minutes = Math.floor(
+          (difference % (1000 * 60 * 60)) /
+          (1000 * 60)
+        );
+
+        const seconds = Math.floor(
+          (difference % (1000 * 60)) / 1000
+        );
+
+        document.getElementById('days').innerText =
+          String(days).padStart(2, '0');
+
+        document.getElementById('hours').innerText =
+          String(hours).padStart(2, '0');
+
+        document.getElementById('minutes').innerText =
+          String(minutes).padStart(2, '0');
+
+        document.getElementById('seconds').innerText =
+          String(seconds).padStart(2, '0');
+      } else {
+        document.getElementById('days').innerText = '00';
+        document.getElementById('hours').innerText = '00';
+        document.getElementById('minutes').innerText = '00';
+        document.getElementById('seconds').innerText = '00';
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+
+</body>
+</html>
