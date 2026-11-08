@@ -1,0 +1,205 @@
+/* ==========================================
+   إعدادات عامة
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+    font-family: "Amiri", serif;
+    background-color: #000;
+}
+
+
+/* ==========================================
+   الصفحة الرئيسية
+========================================== */
+
+.invitation {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+}
+
+
+/* ==========================================
+   الخلفية
+========================================== */
+
+.background {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    min-height: 100vh;
+
+    background-image: url("photo_2026-11-07_14-43-19.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    z-index: 0;
+}
+
+
+/* ==========================================
+   محتوى الدعوة
+========================================== */
+
+.content {
+    position: relative;
+
+    z-index: 1;
+
+    width: 100%;
+    max-width: 700px;
+
+    min-height: 100vh;
+
+    padding-top: 55px;
+
+    text-align: center;
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================
+   الصورة العلوية
+========================================== */
+
+.top-image {
+    display: block;
+
+    width: 380%;
+    max-width: 650px;
+
+    height: auto;
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================
+   منطقة النصوص
+========================================== */
+
+.invitation-text {
+    margin-top: 25px;
+}
+
+
+/* ==========================================
+   دعوة حضور
+========================================== */
+
+.attendance {
+    font-size: 42px;
+
+    font-weight: 400;
+
+    line-height: 1.5;
+
+    color: #ffffff;
+
+    margin-bottom: 20px;
+}
+
+
+/* ==========================================
+   رسمياً
+========================================== */
+
+.official {
+    font-size: 28px;
+
+    font-weight: 400;
+
+    line-height: 1.5;
+
+    color: #ffffff;
+
+    margin-bottom: 10px;
+}
+
+
+/* ==========================================
+   اسم المهندس
+========================================== */
+
+h1 {
+    font-size: 38px;
+
+    font-weight: 700;
+
+    line-height: 1.7;
+
+    color: #ffffff;
+
+    margin: 0;
+}
+
+
+/* ==========================================
+   تصميم الموبايل
+========================================== */
+
+@media (max-width: 600px) {
+
+    .content {
+        padding-top: 35px;
+    }
+
+
+    .top-image {
+        width: 90%;
+    }
+
+
+    .invitation-text {
+        margin-top: 20px;
+    }
+
+
+    .attendance {
+        font-size: 34px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .official {
+        font-size: 24px;
+
+        margin-bottom: 8px;
+    }
+
+
+    h1 {
+        font-size: 30px;
+
+        padding: 0 15px;
+    }
+}
